@@ -1,6 +1,3 @@
-# README
-# Este arquivo contém o conteúdo do README.TXT para o projeto SaudMed Analytics.
-
 ## SaudMed Analytics
 
 Este repositório contém o código-fonte da aplicação **SaudMed Analytics**, um dashboard interativo desenvolvido com Streamlit para análises de dados relacionados a vendas, estoque e compras. O objetivo é centralizar e apresentar informações cruciais para a tomada de decisão no negócio.
@@ -103,4 +100,7 @@ Ao iniciar a aplicação, você verá o dashboard interativo. Utilize a barra la
 ### Desenvolvedor
 
 Cássio Cândido Ribeiro (2025)
+
+Este READMED foi criado pelo Gemini após instruções de ler todo o código e escrever um readmed para o github.
+
 
