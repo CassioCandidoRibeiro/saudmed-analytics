@@ -1,81 +1,106 @@
-SaudMed Analytics
-Dashboard interativo desenvolvido com Streamlit para análise de dados de vendas, estoque e compras da SaudMed. Este projeto visa fornecer insights valiosos para otimização de processos e tomada de decisões estratégicas.
+# README
+# Este arquivo contém o conteúdo do README.TXT para o projeto SaudMed Analytics.
 
-📊 Funcionalidades Principais
-Análise de Vendas: Visualização de dados de vendas, tendências e desempenho.
+## SaudMed Analytics
 
-Gestão de Estoque: Monitoramento de entradas e saídas de produtos.
+Este repositório contém o código-fonte da aplicação **SaudMed Analytics**, um dashboard interativo desenvolvido com Streamlit para análises de dados relacionados a vendas, estoque e compras. O objetivo é centralizar e apresentar informações cruciais para a tomada de decisão no negócio.
 
-Controle de Compras: Ferramentas para auxiliar no processo de compras e anotações de itens em falta.
+### Funcionalidades Principais
 
-Relatórios Dinâmicos: Geração de relatórios filtrados e exportáveis em formato XLSX.
+* **Análise de Compras:**
+    * **Brasil:** Recomendação de compra de produtos com base em vendas e estoque atual, cálculo de custo previsto e informações detalhadas de produtos.
+    * **Paraguai:** Análise de dados de vendas e custos a partir de um arquivo "Informes.xls".
+    * **Geral (BR + PY):** Visão consolidada das operações.
+    * **Geral Sem Stanley:** Filtro para análises excluindo um cliente específico (Stanley).
+* **Análise de Produtos Controlados:** Gerenciamento e visualização de produtos sujeitos a controle especial.
+* **Gestão de Clientes:** Acompanhamento de clientes e histórico de compras.
+* **Orçamento:** Funcionalidades relacionadas a orçamentos.
+* **Ligeirinho:** Seção dedicada a operações rápidas ou específicas.
+* **Produtos:** Visão geral e detalhe de produtos.
+* **InfoServe:** Análise de dados provenientes do sistema InfoServe.
+* **Filtros Dinâmicos:** Permite filtrar dados por período, marca, produto e categoria.
+* **Download de Relatórios:** Possibilidade de exportar os dados exibidos em formato Excel.
 
-🚀 Como Rodar o Projeto
-Siga os passos abaixo para configurar e executar o dashboard em sua máquina.
+### Tecnologias Utilizadas
 
-Pré-requisitos
-Certifique-se de ter o Python 3.8 ou superior instalado em seu sistema.
+O projeto é construído com as seguintes tecnologias:
 
-Download Python: Visite o site oficial do Python: python.org
+* **Streamlit:** Framework principal para criação do dashboard interativo.
+* **Pandas:** Biblioteca essencial para manipulação e análise de dados tabulares (DataFrames).
+* **NumPy:** Biblioteca para computação numérica de alto desempenho.
+* **FDB (Python Firebird Driver):** Driver para conexão com o banco de dados Firebird.
+* **XlsxWriter:** Ferramenta para criação de arquivos Excel (.xlsx), utilizada para exportação de dados.
 
-Instalação no Windows: Durante a instalação, é crucial marcar a opção "Add Python to PATH" (Adicionar Python ao PATH) para que o Python e o pip (gerenciador de pacotes) sejam reconhecidos no terminal.
+### Estrutura do Projeto
 
-📦 Instalação das Dependências
-Navegue até a pasta do projeto:
-Abra o seu terminal (Prompt de Comando no Windows, Terminal no macOS/Linux) e use o comando cd (change directory) para ir até a pasta onde você salvou os arquivos do projeto.
+* `pagina_principal.py`:
+    * Arquivo principal da aplicação Streamlit.
+    * Configura a página, gerencia o estado da sessão, define a barra lateral com filtros (data, marca, produto, categoria, upload de arquivo "Informes").
+    * Organiza o dashboard em abas (`COMPRAS`, `CONTROLADOS`, `CLIENTES`, `ORÇAMENTO`, `LIGEIRINHO`, `PRODUTOS`, `INFOSERVE`).
+    * Exibe métricas e tabelas de dados formatadas, e botões de download.
+* `constants.py`:
+    * Módulo que centraliza todas as constantes utilizadas na aplicação.
+    * Inclui fatores de negócio (ex: `FATOR_REPOSICAO_ESTOQUE`, `FATOR_CUSTO_REVERSO_IMPOSTO`), códigos para consultas SQL (ex: `CODIGO_FILIAL_LOJA`, `CFOP_VENDAS_ESTADUAIS`), e nomes padronizados para colunas de DataFrame.
+* `database.py`:
+    * Módulo responsável pela interação com o banco de dados Firebird.
+    * Contém a função `get_db_connection()` para estabelecer e cachear a conexão com o banco de dados, utilizando credenciais seguras do Streamlit (`st.secrets`).
+    * Inclui a função auxiliar `_execute_query` para execução segura de queries SQL e tratamento básico de dados.
+    * Define funções específicas para carregamento de dados para cada seção do dashboard (ex: `load_marcas()`, `load_categorias()`, `load_compras_brasil_data()`).
+* `utils.py`:
+    * Módulo com funções utilitárias gerais.
+    * Funções de formatação de valores (moeda, percentual, inteiro).
+    * Funções de cálculo de negócio (ex: `calcular_recomendacao`, `calcular_custo_reverso`).
+    * Funções para manipulação de DataFrames e exportação para Excel.
+    * Função `ler_informes_excel` para processar o arquivo "Informes.xls".
+* `requirements.txt`:
+    * Lista todas as dependências do projeto com suas versões específicas para garantir a reprodutibilidade do ambiente.
+* `Arquivo bat pra rodar o código.bat`:
+    * Um script simples para iniciar a aplicação Streamlit via linha de comando. Contém o comando `python -m streamlit run pagina_principal.py`.
 
-cd caminho\para\SuaPastaDoProjeto\saudmed_analytics
-# Exemplo no Windows: cd C:\Users\SeuUsuario\Desktop\Cássio\saudmed_analytics
+### Como Configurar e Rodar o Projeto
 
-Instale as bibliotecas necessárias:
-Com o terminal na pasta do projeto, execute o seguinte comando para instalar todas as dependências listadas no arquivo requirements.txt:
+1.  **Pré-requisitos:**
+    * Python 3.x instalado.
+    * Acesso a um banco de dados Firebird com as credenciais necessárias.
 
-pip install -r requirements.txt
+2.  **Instalação das Dependências:**
+    * Navegue até o diretório raiz do projeto no seu terminal.
+    * Execute o comando para instalar as bibliotecas listadas no `requirements.txt`:
+        ```bash
+        pip install -r requirements.txt
+        ```
 
-▶️ Executando o Dashboard
-Após a instalação das dependências, você pode iniciar o aplicativo Streamlit:
+3.  **Configuração do Banco de Dados:**
+    * Crie um arquivo `.streamlit/secrets.toml` (se não existir) na raiz do seu projeto.
+    * Adicione as credenciais do seu banco de dados Firebird neste arquivo, conforme o exemplo abaixo:
+        ```toml
+        # .streamlit/secrets.toml
+        [db_credentials]
+        host = "seu_host_firebird"
+        port = 3050 # Ou a porta do seu Firebird
+        database = "caminho/para/seu/banco.fdb"
+        user = "seu_usuario"
+        password = "sua_senha"
+        charset = "UTF8" # Opcional, mas recomendado
+        ```
+    * **Segurança:** Mantenha este arquivo `secrets.toml` seguro e **NÃO** o inclua em repositórios públicos como o GitHub.
 
-Certifique-se de estar na pasta raiz do projeto no terminal.
+4.  **Executar a Aplicação:**
+    * Você pode usar o arquivo `.bat` fornecido (se estiver no Windows):
+        ```bash
+        Arquivo bat pra rodar o código.bat
+        ```
+    * Ou execute diretamente pelo terminal:
+        ```bash
+        streamlit run pagina_principal.py
+        ```
+    * A aplicação será aberta automaticamente no seu navegador padrão.
 
-Execute o comando:
+### Uso
 
-streamlit run pagina_principal.py
+Ao iniciar a aplicação, você verá o dashboard interativo. Utilize a barra lateral para aplicar filtros de data, marca, produto e categoria. Na aba "COMPRAS", você poderá fazer o upload do arquivo "Informes.xls" para habilitar as análises relacionadas ao Paraguai e à visão geral. Navegue pelas diferentes abas para acessar os relatórios e análises específicas.
 
-Se o comando acima não funcionar diretamente, você pode tentar com o módulo Python:
+### Desenvolvedor
 
-python -m streamlit run pagina_principal.py
+Cássio Cândido Ribeiro (2025)
 
-Observação: O comando que você forneceu (cd /d "C:\Users\Saudmed Terminal\Desktop\Cássio\saudmed_analytics\" && python -m streamlit run pagina_principal.py) é útil para executar diretamente de um script ou atalho, pois ele primeiro navega até a pasta e depois executa o Streamlit.
-
-Acesso ao Dashboard:
-Após executar o comando, o Streamlit abrirá automaticamente o dashboard em seu navegador padrão (geralmente em http://localhost:8501).
-
-📁 Estrutura do Projeto
-pagina_principal.py: O arquivo principal da aplicação Streamlit, onde o dashboard é construído.
-
-database.py: Módulo responsável pela interação com o banco de dados Firebird.
-
-utils.py: Contém funções utilitárias para formatação, processamento de dados e outras operações auxiliares.
-
-constants.py: Define constantes e variáveis globais utilizadas em todo o projeto.
-
-requirements.txt: Lista todas as dependências Python necessárias para o projeto.
-
-anotacoes_compras.txt: Arquivo de texto para anotações específicas da aba de compras.
-
-ajuste.txt: (Descrever a finalidade deste arquivo, se houver)
-
-saudmed_logo.jpg: Logo da SaudMed utilizada no dashboard.
-
-🤝 Contribuição
-Contribuições são bem-vindas! Se você tiver sugestões, melhorias ou encontrar algum problema, sinta-se à vontade para:
-
-Me mandar um pix para 07191419903
-
-📄 Licença
-Este projeto é desenvolvido para uso interno da SaudMed.
-
-📧 Contato
-Desenvolvido por Cássio Cândido Ribeiro (LinkedIn).
-
-CassioCandidoRibeiro@gmail.com
