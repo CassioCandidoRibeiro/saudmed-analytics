@@ -1,0 +1,24 @@
+# requirements.txt
+#
+# Este arquivo lista as dependências do projeto SaudMed Analytics.
+# As versões são especificadas para garantir a reprodutibilidade do ambiente.
+#
+# Para instalar as dependências, execute:
+# pip install -r requirements.txt
+
+# Framework principal para criação de dashboards e aplicações web interativas.
+streamlit==1.34.0  # Versão recomendada para compatibilidade.
+                   # Verifique a documentação do Streamlit para a versão mais recente e estável.
+
+# Biblioteca para manipulação e análise de dados. Essencial para DataFrames.
+pandas==2.2.2      # Usada extensivamente para processamento de dados tabulares.
+
+# Biblioteca fundamental para computação numérica de alto desempenho.
+numpy==1.26.4      # Dependência do pandas e para operações matemáticas.
+
+# Driver para conexão com o banco de dados Firebird.
+fdb==2.0.0         # Necessário para interagir com o Firebird via Python.
+
+# Ferramenta para criação de arquivos Excel (.xlsx).
+# Utilizado pelo pandas (engine='xlsxwriter') para exportação de dados.
+xlsxwriter==3.2.0  # Garante a funcionalidade de download de relatórios em XLSX.
